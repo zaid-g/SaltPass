@@ -1,4 +1,4 @@
-Free secure password manager.
+#Free secure password manager.
 
 compile by running ```gcc saltpass.c -lssl -lcrypto``` or run the executable.
 
