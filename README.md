@@ -23,7 +23,7 @@ Insert salt (could be website name, file name, etc..):
 ```
 The last line is the generated password. Note that all generated passwords will start with 9zZ! (can be modified in saltpass.c file) to make sure they have at least one uppercase, lowercase, numerical, and special character. The length of the passwords is 16 characters (can also be modified in file).
 
-Once that password is used to e.g. sign up for an account on a website, then you can run the file without an argument:
+Once that password is used to e.g. sign up for an account on a website, then you can run the executable without an argument:
 ```
 [zaid] ~/dev/SaltPass [master]  % ./saltpass 
 Insert password:
