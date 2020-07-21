@@ -13,7 +13,7 @@ salt: facebook
 unique password output: 9zZ!)chh7x\Q=Yp:w$NU
 ```
 
-## Features:
+## Features
 - Simple
 - Fast
 - Memoryless: no data is kept/stored. User must re-enter master password every time program is run to retrieve passwords.
@@ -39,7 +39,7 @@ appending 4 characters to beginning of string, the result is the unique password
 
 ```9zZ!)chh7x\Q=Yp:w$NU```
 
-## Usage:
+## Usage
 It is preferred that user doesn't copy password to clipboard, as any unprivileged process has access to data stored there. Instead, read output and type manually in the destination box. It is recommended that user runs Wayland protocol (ideally with screenshot disabled) over X for enhanced security. Under X, any unprivileged process can sniff and inject keystrokes from/into other processes (a malicious process can easily read master password and salt as they are inputed using keyboard) as well as read the content of the screen (a malicious process can easily read output password from screen).
 
 To generate a new password, it is recommended to enter the master password twice to decrease the chance that the generated password is invalid due to typos. This can be done by executing the program with an argument (any argument):
