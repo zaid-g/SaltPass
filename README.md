@@ -4,7 +4,7 @@ compile by running ```gcc -o saltpass saltpass.c -lssl -lcrypto``` or run the ex
 
 User enters a master password and a "salt" value that represents e.g. the website they are logging into/file they are encrypting/etc. The program then outputs a unique password generated deterministically consisting of pseudo-random alpha-numeric/special characters<b>*</b>. 
 
-<b>*</b>4 characters in the password (length 20 by default) are not pseudo-random, the rest are. 
+<b>*</b>4 characters in the password (of maximum length 20 by default) are not pseudo-random, the rest are. 
 
 ```
 e.g.
