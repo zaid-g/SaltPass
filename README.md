@@ -32,7 +32,7 @@ Insert password again to verify:
 Insert salt (could be website name, file name, etc..):
 9zZ!.]p:01?t+lQg
 ```
-The last line is the generated password. Note that all generated passwords will start with 9zZ! (can be modified in saltpass.c file) to make sure they have at least one uppercase, lowercase, numerical, and special character. The length of the generated passwords is 16 characters (can also be modified in file). There is a tiny probability that the generated passwords will be shorter.
+The last line is the generated password. Note that all generated passwords will start with 9zZ! (can be modified in saltpass.c file) to make sure they have at least one uppercase, lowercase, numerical, and special character. The length of the generated passwords is 20 characters (can also be modified in file). There is a tiny probability that the generated passwords will be shorter.
 
 Once that password is used to e.g. sign up for an account on a website, then you can run the executable without an argument to retrieve the password:
 ```
