@@ -25,7 +25,8 @@ The ascii output of this  is:
 ```)ÍÀ¿chh7Ðx÷«Å\²ýÃQ­¸Ë=ª¶Yp:ú²¢w$NÊ­¿øU¥kf¶¥íÃÄ%a»```
 
 filtering for the first 16 ascii characters in range [33,126]:
-)chh7x\Q=Yp:w$NU
+
+```)chh7x\Q=Yp:w$NU```
 
 appending 4 characters to beginning of string, the result is the unique password.
 
