@@ -15,6 +15,21 @@ unique password output: 9zZ!PGPd[D"R8^,y
 
 Method: The program appends the master password and salt, passes them through a sha512 hash function (from openssl), and reformats the sha output to an appropriately formatted unique password displayed to the screen by capturing the bytes that are in ascii range [33,126]. 
 
+For example, suppose the password is "p@ssw0rd" and salt is "facebook". The program first appends the strings, producing "p@ssw0rdfacebook". The sha512 hash of "p@ssw0rdfacebook" is
+
+```29cd1bc0bf0e6386680207156837d078f7ab80c55cb2fdc351adb8cb3daa12b659701a3afab2a277244ecaadbff888551c8a08a56b6619b6a5edc3c4251261bb```.
+
+The ascii output of this  is:
+
+```)ÍÀ¿chh7Ðx÷«Å\²ýÃQ­¸Ë=ª¶Yp:ú²¢w$NÊ­¿øU¥kf¶¥íÃÄ%a»```
+
+filtering for the first 16 ascii characters in range [33,126]:
+)chh7x\Q=Yp:w$NU
+
+appending 4 characters to beginning of string, the result is the unique password.
+
+```9zZ!)chh7x\Q=Yp:w$NU```
+
 ## Features:
 - Simple
 - Fast
