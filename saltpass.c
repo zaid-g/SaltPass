@@ -102,7 +102,7 @@ int main(int argc, char** argv)
     SHA512(string_to_hash, sizeof(string_to_hash) - 1, hash);
 
     //convert to output password by filtering for appropriate ascii chars
-    const int PASS_LENGTH = 16;
+    const int PASS_LENGTH = 20;
     char out[PASS_LENGTH + 1];
     for(int i = 0; i < PASS_LENGTH + 1; i++)
         out[i] = '\0';
