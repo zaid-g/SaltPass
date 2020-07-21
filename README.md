@@ -12,6 +12,11 @@ password: p@ssw0rd
 salt: facebook
 unique password output for facebook: 9zZ!)chh7x\Q=Yp:w$NU
 ```
+```
+password: p@ssw0rd
+salt: gmail
+unique password output for gmail: 9zZ!vDdxOXfRP&[BCiy3
+```
 
 ## Features
 - Simple
