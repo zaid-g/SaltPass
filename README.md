@@ -1,4 +1,4 @@
-# Free secure password manager (beta version)
+# Free secure memoryless password manager (beta version)
 
 compile by running ```gcc -o saltpass saltpass.c -lssl -lcrypto``` or run the executable.
 
