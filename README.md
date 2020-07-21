@@ -2,7 +2,9 @@
 
 compile by running ```gcc saltpass.c -lssl -lcrypto``` or run the executable.
 
-User enters a master password and a "salt" value that represents e.g. the website they are logging into/file they are encrypting/etc. The program then outputs a unique password generated deterministically that can be used. 
+User enters a master password and a "salt" value that represents e.g. the website they are logging into/file they are encrypting/etc. The program then outputs a unique password generated deterministically consisting of pseudo-random alpha-numeric/special characters* that can be used. 
+
+*4 characters in the password (length 20 by default) are not pseudo-random, the rest are. 
 
 ```
 e.g.
