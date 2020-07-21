@@ -20,7 +20,7 @@ unique password output: 9zZ!)chh7x\Q=Yp:w$NU
 - Secure: Process memory is cleared before program exits. Terminal hides password and salt while user inputs on screen. 
 
 
-# Method 
+## Method 
 The program appends the master password and salt, passes them through a sha512 hash function (from openssl), and reformats the sha output to an appropriately formatted unique password displayed to the screen by capturing the bytes that are in ascii range [33,126]. 
 
 For example, suppose the password is "p@ssw0rd" and salt is "facebook". The program first appends the strings, producing "p@ssw0rdfacebook". The sha512 hash of "p@ssw0rdfacebook" is
