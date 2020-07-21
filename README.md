@@ -1,6 +1,6 @@
 # Free secure password manager (beta version)
 
-compile by running ```gcc saltpass.c -lssl -lcrypto``` or run the executable.
+compile by running ```gcc -o saltpass saltpass.c -lssl -lcrypto``` or run the executable.
 
 User enters a master password and a "salt" value that represents e.g. the website they are logging into/file they are encrypting/etc. The program then outputs a unique password generated deterministically consisting of pseudo-random alpha-numeric/special characters<b>*</b> that can be used. 
 
