@@ -10,7 +10,7 @@ User enters a master password and a "salt" value that represents e.g. the websit
 e.g.
 password: p@ssw0rd
 salt: facebook
-unique password output: 9zZ!)chh7x\Q=Yp:w$NU
+unique password output for facebook: 9zZ!)chh7x\Q=Yp:w$NU
 ```
 
 ## Features
