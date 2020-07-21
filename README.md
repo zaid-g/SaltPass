@@ -13,7 +13,7 @@ salt: facebook
 unique password output: 9zZ!PGPd[D"R8^,y
 ```
 
-Method: The program appends the master password and salt, passes them through a sha512 hash function (from openssl), and reformats the sha output to an appropriately formatted unique password displayed to the screen by capturing the bytes outputed by the hash function that are in ascii range [33,126]. 
+Method: The program appends the master password and salt, passes them through a sha512 hash function (from openssl), and reformats the sha output to an appropriately formatted unique password displayed to the screen by capturing the bytes that are in ascii range [33,126]. 
 
 ## Features:
 - Simple
