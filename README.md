@@ -21,10 +21,10 @@ appending 4 characters to beginning of string, the result is the unique password
 
 
 ## Features
-- *Simple*: code is only 132 lines long (besides call to `openssl`'s sha512 function), so it's easy to audit and improve to fit your specific needs.
-- *Fast*
-- *Memoryless*: no data is kept/stored. User must re-enter master password every time program is run to retrieve passwords.
-- *Secure*: Process memory is cleared before program exits. Terminal hides password and salt while user inputs on screen. Passing the master password as a command line argument not permited, since it gets saved in command history and would be visible to other processes. For more notes on security, see Usage section below.
+- **Simple**: code is only 132 lines long (besides call to `openssl`'s sha512 function), so it's easy to audit and improve to fit your specific needs.
+- **Fast**
+- **Memoryless**: no data is kept/stored. User must re-enter master password every time program is run to retrieve passwords.
+- **Secure**: Process memory is cleared before program exits. Terminal hides password and salt while user inputs on screen. Passing the master password as a command line argument not permited, since it gets saved in command history and would be visible to other processes. For more notes on security, see Usage section below.
 
 ## Usage
 compile by running ```gcc -o saltpass saltpass.c -lssl -lcrypto``` or run the executable.
