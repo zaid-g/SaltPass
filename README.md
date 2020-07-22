@@ -19,15 +19,16 @@ appending 4 characters to beginning of string, the result is the unique password
 
 ```9zZ!)chh7x\Q=Yp:w$NU```
 
-compile by running ```gcc -o saltpass saltpass.c -lssl -lcrypto``` or run the executable.
 
 ## Features
-- Simple: code is only 132 lines long (besides call to `openssl`'s sha512 function), so it's easy to audit and improve to fit your specific needs.
-- Fast
-- Memoryless: no data is kept/stored. User must re-enter master password every time program is run to retrieve passwords.
-- Secure: Process memory is cleared before program exits. Terminal hides password and salt while user inputs on screen. Passing the master password as a command line argument not permited, since it gets saved in command history and would be visible to other processes.
+- *Simple*: code is only 132 lines long (besides call to `openssl`'s sha512 function), so it's easy to audit and improve to fit your specific needs.
+- *Fast*
+- *Memoryless*: no data is kept/stored. User must re-enter master password every time program is run to retrieve passwords.
+- *Secure*: Process memory is cleared before program exits. Terminal hides password and salt while user inputs on screen. Passing the master password as a command line argument not permited, since it gets saved in command history and would be visible to other processes. For more notes on security, see Usage section below.
 
 ## Usage
+compile by running ```gcc -o saltpass saltpass.c -lssl -lcrypto``` or run the executable.
+
 User enters a master password and a "salt" value that represents e.g. the website they are logging into/file they are encrypting/etc. The program then outputs a unique password generated deterministically consisting of pseudo-random alpha-numeric/special characters<b>*</b>. 
 
 <b>*</b>4 characters in the password (of maximum length 20 by default) are not pseudo-random, the rest are. 
@@ -44,7 +45,7 @@ salt: gmail
 unique password output for gmail: 9zZ!vDdxOXfRP&[BCiy3
 ```
 
-It is preferred that user doesn't copy password to clipboard, as any unprivileged process has access to data stored there. Instead, read output and type manually in the destination box. It is recommended that user runs Wayland protocol (ideally with screenshot disabled) over X for enhanced security. Under X, any unprivileged process can sniff and inject keystrokes from/into other processes (a malicious process can easily read master password and salt as they are inputed using keyboard) as well as read the content of the screen (a malicious process can easily read output password from screen).
+It is preferred that user doesn't copy password to clipboard, as any unprivileged process has access to data stored there. Instead, read output and type manually in the destination box. It is recommended that user runs Wayland protocol (ideally with screenshot disabled) over X for enhanced security. Under X, any unprivileged process can sniff and inject keystrokes from/into other processes (a malicious process can easily read master password and salt as they are inputed using keyboard) as well as read the content of the screen (a malicious process can easily read output password from screen). User can discard the code and keep the executable, and run  
 
 To generate a new password, it is recommended to enter the master password twice to decrease the chance that the generated password is invalid due to typos. This can be done by executing the program with an argument (any argument):
 ```
