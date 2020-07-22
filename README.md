@@ -1,4 +1,4 @@
-# Free secure memoryless password generator (beta version)
+# Free memoryless password generator (beta version)
 
 ## Method 
 The program appends the master password and salt, passes them through a sha512 hash function (from openssl), and reformats the sha output to an appropriately formatted unique password displayed to the screen by capturing the bytes that are in ascii range [33,126]. 
