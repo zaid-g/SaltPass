@@ -1,4 +1,4 @@
-# Free memoryless password generator (beta version)
+# Free memoryless password generator
 
 ## Method 
 The program appends the master password and salt, passes them through a sha512 hash function (from openssl), and reformats the sha output to an appropriately formatted unique password displayed to the screen by capturing the bytes that are in ascii range [33,126]. 
@@ -24,7 +24,8 @@ appending 4 characters to beginning of string, the result is the unique password
 - **Simple**: code is only 132 lines long (besides call to `openssl`'s sha512 function), so it's easy to audit and improve to fit your specific needs.
 - **Fast**
 - **Memoryless**: no data is kept/stored. User must re-enter master password every time program is run to retrieve passwords.
-- **Secure**: Process memory is cleared before program exits. Terminal hides password and salt while user inputs on screen. Passing the master password as a command line argument not permited, since it gets saved in command history and would be visible to other processes. For more notes on security, see Usage section below.
+- **Secure**<sup>1<\sup>: Process memory is cleared before program exits. Terminal hides password and salt while user inputs on screen. Passing the master password as a command line argument not permited, since it gets saved in command history and would be visible to other processes.. For more notes on security, see Usage section below.
+<sup>1<\sup>Please note that the code has NOT been independently verified to be secure by a third party
 
 ## Usage
 compile by running ```gcc -o saltpass saltpass.c -lssl -lcrypto``` or run the executable.
