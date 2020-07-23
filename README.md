@@ -19,7 +19,7 @@ appending 4 characters to beginning of string to ensure it meets common website 
 
 ```9zZ!)chh7x\Q=Yp:w$NU```
 
-It is impossible for anyone to know what master password and salt were used to produce the output password. So even if one or more of the user's output password are compromised, a malicious entity will not have any knowledge of the user's other passwords or master password.
+It is impossible for anyone to know what master password and salt were used to produce the output password. So even if one or more output passwords are compromised, a malicious entity will not have any knowledge of the user's other passwords or master password.
 
 ## Features
 - **Simple**: code is only 117 lines long, so it's easy to audit and improve to fit your specific needs.
