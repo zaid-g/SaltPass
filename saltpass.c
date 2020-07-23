@@ -36,29 +36,13 @@ void zero_out_str(char str[]){
         str[i] = '0'; //clear out memory
 }
 
-int main(int argc, char** argv)
+int main()
 {
 
     //read password without displaying in terminal
     char pass[BUFSIZ];
     puts("Insert password:");
     read_string(pass);
-
-    //if user wants to make sure he inputs correct password (useful when first creating password for a website), he can pass any argument  
-    if(argc > 1){
-        char password_1[BUFSIZ];
-        puts("Insert password again to verify:");
-        read_string(password_1);
-        if(strcmp(pass, password_1) != 0)
-        {
-            puts("Passwords don't match, exiting");
-            zero_out_str(pass);
-            zero_out_str(password_1);
-            return 0;
-        }
-        else
-            zero_out_str(password_1);
-    }
 
     //read salt without displaying in terminal
     puts("Insert salt (could be website name, file name, etc..):");
@@ -98,6 +82,7 @@ int main(int argc, char** argv)
     zero_out_str(pass);
     zero_out_str(salt);
 
+    // pass to sha512 hash function
     char hash[SHA512_DIGEST_LENGTH];
     SHA512(string_to_hash, sizeof(string_to_hash) - 1, hash);
 
