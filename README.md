@@ -19,6 +19,7 @@ appending 4 characters to beginning of string to ensure it meets common website 
 
 ```9zZ!)chh7x\Q=Yp:w$NU```
 
+It is impossible for anyone to know what master password and salt were used to produce the output password.
 
 ## Features
 - **Simple**: code is only 117 lines long, so it's easy to audit and improve to fit your specific needs.
