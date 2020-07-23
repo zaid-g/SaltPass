@@ -15,7 +15,7 @@ filtering for the first 16 ascii characters in range [33,126]:
 
 ```)chh7x\Q=Yp:w$NU```
 
-appending 4 characters to beginning of string, the result is the unique password:
+appending 4 characters to beginning of string to ensure it meets common website password requirements, the result is the unique password:
 
 ```9zZ!)chh7x\Q=Yp:w$NU```
 
