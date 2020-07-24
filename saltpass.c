@@ -77,16 +77,16 @@ int main()
     zero_out_str(pass);
     zero_out_str(salt);
 
-    char hash[BUFSIZ];
-    for(int i = 0; i < BUFSIZ; i++)
+    char hash[100];
+    for(int i = 0; i < 100; i++)
         hash[i] = '\0';
     // pass to sha512 hash function
     SHA512(data, strlen(data), hash);
 
     zero_out_str(data);
 
-    char out[BUFSIZ];
-    for(int i = 0; i < BUFSIZ; i++)
+    char out[100];
+    for(int i = 0; i < 100; i++)
         out[i] = '\0';
 
     //convert to output password by remapping to appropriate ascii chars range
