@@ -2,6 +2,7 @@
 #include <termios.h>
 #include <stdio.h>
 #include <openssl/sha.h>
+#include <math.h>
 
 void read_string(char* password)
 {
@@ -31,9 +32,9 @@ void read_string(char* password)
     tcsetattr(0, TCSANOW, &old_terminal);
 }
 
-void zero_out_str(char str[]){
-    for(int i = 0; i < BUFSIZ; i++)
-        str[i] = '0'; //clear out memory
+void zero_out_str(char *c, int l){
+    for(int i = 0; i < l; i++)
+        c[i] = '0'; 
 }
 
 int main()
@@ -77,10 +78,10 @@ int main()
         string_to_hash[i] = data[i];
     
     //clear memory
-    zero_out_str(data);
+    zero_out_str(data, strlen(data));
     stop_ind = 0; 
-    zero_out_str(pass);
-    zero_out_str(salt);
+    zero_out_str(pass, strlen(pass));
+    zero_out_str(salt, strlen(salt));
 
     // pass to sha512 hash function
     char hash[SHA512_DIGEST_LENGTH];
@@ -98,10 +99,9 @@ int main()
     out[3] = '!';
     int outind = 4;
     for(int i = 0; i < SHA512_DIGEST_LENGTH; i++){
-        if((int)hash[i] >= 33 && (int)hash[i] <= 126){
-            out[outind] = hash[i];
-            outind++;
-        }
+        //remap to ascii typable character range
+        out[outind] = (float)(unsigned char)hash[i]/255*(126-33) + 33;
+        outind++;
         if(outind >= PASS_LENGTH){
             break;
         }
@@ -109,9 +109,9 @@ int main()
     puts(out);
 
     //clear memory
-    zero_out_str(out);
-    zero_out_str(hash);
-    zero_out_str(string_to_hash);
+    zero_out_str(out, strlen(out));
+    zero_out_str(hash, strlen(hash));
+    zero_out_str(string_to_hash, strlen(string_to_hash));
 
     return 0;
 }
