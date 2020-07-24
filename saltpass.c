@@ -32,8 +32,8 @@ void read_string(char* password)
     tcsetattr(0, TCSANOW, &old_terminal);
 }
 
-void zero_out_str(char *c, int l){
-    for(int i = 0; i < l; i++)
+void zero_out_str(char *c){
+    for(int i = 0; i < BUFSIZ; i++)
         c[i] = '0'; 
 }
 
@@ -53,7 +53,7 @@ int main()
     //create string that will be hashed to produce unique password
     char data[BUFSIZ*2];
     int stop_ind = 0;
-    for(int i = 0; i < BUFSIZ; i++){
+    for(int i = 0; i < 2*BUFSIZ; i++){
         if(pass[i] != '\0' && pass[i] != '\000' && pass[i] != '\n')
             data[i] = pass[i];
         else{
@@ -72,46 +72,40 @@ int main()
     } 
 
     // truncate string
-    char string_to_hash[stop_ind + 1];
+    char string_to_hash[BUFSIZ];
     string_to_hash[stop_ind] = '\0';
     for(int i = 0; i < stop_ind; i++)
         string_to_hash[i] = data[i];
     
     //clear memory
-    zero_out_str(data, strlen(data));
+    zero_out_str(data);
     stop_ind = 0; 
-    zero_out_str(pass, strlen(pass));
-    zero_out_str(salt, strlen(salt));
+    zero_out_str(pass);
+    zero_out_str(salt);
 
     // pass to sha512 hash function
-    char hash[SHA512_DIGEST_LENGTH];
-    SHA512(string_to_hash, sizeof(string_to_hash) - 1, hash);
+    char hash[BUFSIZ];
+    for(int i = 0; i < BUFSIZ + 1; i++)
+        hash[i] = '\0';
+
+    SHA512(string_to_hash, strlen(string_to_hash), hash);
 
     //convert to output password by filtering for appropriate ascii chars
     const int PASS_LENGTH = 20;
-    char out[PASS_LENGTH + 1];
-    for(int i = 0; i < PASS_LENGTH + 1; i++)
+    char out[BUFSIZ];
+    for(int i = 0; i < BUFSIZ; i++)
         out[i] = '\0';
-    //adding lowercase, uppercase, numeric, and special character to meet password requirements in case hash output doesn't contain any
-    out[0] = '9';
-    out[1] = 'z';
-    out[2] = 'Z';
-    out[3] = '!';
-    int outind = 4;
-    for(int i = 0; i < SHA512_DIGEST_LENGTH; i++){
+
+    for(int i = 0; i < PASS_LENGTH; i++){
         //remap to ascii typable character range
-        out[outind] = (float)(unsigned char)hash[i]/255*(126-33) + 33;
-        outind++;
-        if(outind >= PASS_LENGTH){
-            break;
-        }
+        out[i] = (float)(unsigned char)hash[i]/255*(126-33) + 33;
     }
     puts(out);
 
     //clear memory
-    zero_out_str(out, strlen(out));
-    zero_out_str(hash, strlen(hash));
-    zero_out_str(string_to_hash, strlen(string_to_hash));
+    zero_out_str(out);
+    zero_out_str(hash);
+    zero_out_str(string_to_hash);
 
     return 0;
 }
