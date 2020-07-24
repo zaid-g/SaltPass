@@ -84,7 +84,7 @@ int main()
     SHA512(data, strlen(data), hash);
 
     //convert to output password by filtering for appropriate ascii chars
-    const int PASS_LENGTH = 20;
+    const int PASS_LENGTH = 16;
     char out[BUFSIZ];
     for(int i = 0; i < BUFSIZ; i++)
         out[i] = '\0';
