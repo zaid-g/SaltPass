@@ -83,6 +83,8 @@ int main()
     // pass to sha512 hash function
     SHA512(data, strlen(data), hash);
 
+    zero_out_str(data);
+
     //convert to output password by filtering for appropriate ascii chars
     const int PASS_LENGTH = 16;
     char out[BUFSIZ];
@@ -98,7 +100,6 @@ int main()
     //clear memory
     zero_out_str(out);
     zero_out_str(hash);
-    zero_out_str(data);
 
     return 0;
 }
