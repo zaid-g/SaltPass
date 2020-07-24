@@ -77,26 +77,21 @@ int main()
     zero_out_str(pass);
     zero_out_str(salt);
 
-    char hash[100];
-    for(int i = 0; i < 100; i++)
-        hash[i] = '\0';
+    char hash[64 + 1];
+    hash[64] = '\0';
     // pass to sha512 hash function
     SHA512(data, strlen(data), hash);
-
     zero_out_str(data);
 
-    char out[100];
-    for(int i = 0; i < 100; i++)
-        out[i] = '\0';
+    const int PASS_LENGTH = 16;
+    char out[PASS_LENGTH + 1];
+    out[PASS_LENGTH] = '\0';
 
     //convert to output password by remapping to appropriate ascii chars range
-    const int PASS_LENGTH = 16;
     for(int i = 0; i < PASS_LENGTH; i++){
         out[i] = (float)(unsigned char)hash[i]/255*(126-33) + 33;
     }
     puts(out);
-
-    //clear memory
     zero_out_str(out);
     zero_out_str(hash);
 
