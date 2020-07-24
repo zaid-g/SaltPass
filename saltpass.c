@@ -39,7 +39,6 @@ void zero_out_str(char *c){
 
 int main()
 {
-
     //read password without displaying in terminal
     char pass[BUFSIZ];
     puts("Insert password:");
@@ -52,8 +51,10 @@ int main()
 
     //create string that will be hashed to produce unique password
     char data[BUFSIZ*2];
+    for(int i = 0; i < BUFSIZ*2; i++)
+        data[i] = '\0';
     int stop_ind = 0;
-    for(int i = 0; i < 2*BUFSIZ; i++){
+    for(int i = 0; i < BUFSIZ; i++){
         if(pass[i] != '\0' && pass[i] != '\000' && pass[i] != '\n')
             data[i] = pass[i];
         else{
@@ -70,25 +71,17 @@ int main()
             break;
         }
     } 
-
-    // truncate string
-    char string_to_hash[BUFSIZ];
-    string_to_hash[stop_ind] = '\0';
-    for(int i = 0; i < stop_ind; i++)
-        string_to_hash[i] = data[i];
     
     //clear memory
-    zero_out_str(data);
     stop_ind = 0; 
     zero_out_str(pass);
     zero_out_str(salt);
 
-    // pass to sha512 hash function
     char hash[BUFSIZ];
-    for(int i = 0; i < BUFSIZ + 1; i++)
+    for(int i = 0; i < BUFSIZ; i++)
         hash[i] = '\0';
-
-    SHA512(string_to_hash, strlen(string_to_hash), hash);
+    // pass to sha512 hash function
+    SHA512(data, strlen(data), hash);
 
     //convert to output password by filtering for appropriate ascii chars
     const int PASS_LENGTH = 20;
@@ -105,7 +98,7 @@ int main()
     //clear memory
     zero_out_str(out);
     zero_out_str(hash);
-    zero_out_str(string_to_hash);
+    zero_out_str(data);
 
     return 0;
 }
