@@ -9,7 +9,7 @@ void read_string(char* password)
     static struct termios old_terminal;
     static struct termios new_terminal;
 
-    //get settings of the actual terminal
+    // get settings of the actual terminal
     tcgetattr(0, &old_terminal);
 
     // do not echo the characters
@@ -85,14 +85,13 @@ int main()
 
     zero_out_str(data);
 
-    //convert to output password by filtering for appropriate ascii chars
-    const int PASS_LENGTH = 16;
     char out[BUFSIZ];
     for(int i = 0; i < BUFSIZ; i++)
         out[i] = '\0';
 
+    //convert to output password by remapping to appropriate ascii chars range
+    const int PASS_LENGTH = 16;
     for(int i = 0; i < PASS_LENGTH; i++){
-        //remap to ascii typable character range
         out[i] = (float)(unsigned char)hash[i]/255*(126-33) + 33;
     }
     puts(out);
