@@ -10,7 +10,7 @@
 ## Usage
 compile by running ```gcc -o saltpass saltpass.c -lssl -lcrypto``` or run the executable.
 
-User enters a master password and a "salt" value that represents e.g. the website they are logging into/file they are encrypting/etc. The program then outputs a unique password generated deterministically consisting of pseudo-random alpha-numeric/special characters. 
+To retrieve the password for an e.g. website, user executes the program and enters the master password and a "salt" value that represents the e.g. website they are loggin into. The program then outputs the unique password (generated deterministically at run time) consisting of pseudo-random alpha-numeric/special characters given that salt. 
 
 ```
 e.g.
