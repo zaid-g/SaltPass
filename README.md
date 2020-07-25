@@ -38,7 +38,7 @@ google#
 icloud##
 spotify#
 ```
-And the user executes the program with the argument of that file's path e.g. `./saltpass saltfile.txt` and passes the salt "icloud", it will scan the file for `icloud` and use the salt value in the file "icloud##". This will generate the most up to date password for icloud. The user can view their previously used passwords for a given salt by running the program without passing an argument, and entering e.g. a salt value = "icloud" to get their first password, "icloud#" to get their second used password, "icloud####" to get their 5th password, etc.. The user can edit the saltfile by appending a '#' to the relevant salt to update their password for that salt.
+And the user executes the program with the argument of that file's path e.g. `./saltpass saltfile.txt` and passes the salt "icloud", it will use the salt value in the file "icloud##". This will lead the program to generate the most up to date password for icloud. The user can edit the saltfile by appending a '#' (or any character(s)) to the relevant salt to update the password for that salt. The user can view their previously used passwords for a given salt by running the program without passing an argument, and entering e.g. a salt value = "icloud" to get their first password, "icloud#" to get their second used password, "icloud####" to get their 5th password, etc.. 
 
 ## Method 
 The program appends the master password and salt, passes them through a sha512 hash function (from openssl), and reformats the sha output to an appropriately formatted unique password displayed to the screen by rescaling the byte values to ascii range [33,126], which are the typable keyboard characters. 
