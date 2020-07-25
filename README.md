@@ -30,7 +30,7 @@ To generate a new password, it is recommended to enter run the program twice to 
 
 The length of the generated passwords is 16 characters by default (can modify in code).
 
-Whenever the program is run, it looks for the most up to date version of the entered salt value in the file path determined by the argument passed to the executable. This is to enable the user to update passwords.
+Whenever the program is run, it looks for the most up to date version of the entered salt value (if it exists) in the file path determined by the argument passed to the executable. This is to enable the user to update passwords.
 
 e.g. If `saltfile.txt` contains
 ```
