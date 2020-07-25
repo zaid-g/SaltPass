@@ -26,7 +26,7 @@ unique password output for gmail: L9|Q!EL`s|lqZ\'=
 
 It is preferred that user doesn't copy password to clipboard, as any unprivileged process has access to data stored there. Instead, read output and type manually in the destination box. It is recommended that user runs Wayland protocol (ideally with screenshot disabled) over X for enhanced security. Under X, any unprivileged process can sniff and inject keystrokes from/into other processes (a malicious process can easily read master password and salt as they are inputed using keyboard) as well as read the content of the screen (a malicious process can easily read output password from screen). User can discard the code and keep the executable, and run ```chmod 544 <executable>``` to prevent unprivileged replacement of executable by a malicious process.
 
-To generate a new password, it is recommended to enter run the program twice to decrease the chance that the generated password is invalid due to typos. 
+To generate a new password (for example when newly signing up for a website), it is recommended to run the program twice to decrease the chance that the generated password is invalid due to typos. 
 
 The length of the generated passwords is 16 characters by default (can modify in code).
 
