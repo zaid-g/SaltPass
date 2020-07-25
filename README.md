@@ -7,17 +7,9 @@ For example, suppose the password is "p@ssw0rd" and salt is "facebook". The prog
 
 ```29cd1bc0bf0e6386680207156837d078f7ab80c55cb2fdc351adb8cb3daa12b659701a3afab2a277244ecaadbff888551c8a08a56b6619b6a5edc3c4251261bb```.
 
-The ascii output of this  is:
+Each byte $b$ lies in the range [0, 255]. Remapping the first `PASS_LENGTH` bytes to range [33, 126] $y = b/255*(126 - 33) + 33$ gives us the output password:
 
-```)ÍÀ¿chh7Ðx÷«Å\²ýÃQ­¸Ë=ª¶Yp:ú²¢w$NÊ­¿øU¥kf¶¥íÃÄ%a»```
-
-filtering for the first 16 ascii characters in range [33,126]:
-
-```)chh7x\Q=Yp:w$NU```
-
-appending 4 characters to beginning of string to ensure it meets common website password requirements, the result is the unique password:
-
-```9zZ!)chh7x\Q=Yp:w$NU```
+`/k*gf&EQF!#(F5lL`
 
 It is impossible for anyone to know what master password and salt were used to produce the output password. So even if one or more output passwords are compromised, a malicious entity will not have any knowledge of the user's other passwords or master password.
 
