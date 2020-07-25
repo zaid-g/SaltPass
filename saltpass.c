@@ -29,10 +29,6 @@ void read_string(char* password)
     tcsetattr(0, TCSANOW, &old_terminal);
 }
 
-char* update_salt_file(int slt_index, char* slt_file){
-
-}
-
 void memclear_string(char *ch, int l){
     for(int i = 0; i < l; i++)
         ch[i] = '\0'; 
@@ -41,21 +37,16 @@ void memclear_string(char *ch, int l){
 
 int main()
 {
-    //read password without displaying in terminal
-    char pass[BUFSIZ]; memclear_string(pass, sizeof(pass));
-    puts("Insert password:");
-    read_string(pass);
-    pass[strlen(pass) - 1] = '\0';
-
     //read salt without displaying in terminal
-    puts("Insert salt (could be website name, file name, etc..):");
+    puts("Insert salt (could be website name, file name, etc..), backspace works:");
     char salt[BUFSIZ]; memclear_string(salt, sizeof(salt));
     read_string(salt);
-    salt[strlen(salt) - 1] = '\0';
+    salt[strlen(salt) - 1] = '\0';//replace newline with 0
 
-    //get up to date salt value
+    //get up to date salt value if file exists and it exists in file
+    char FILE_NAME[] = "salt.txt"; //modify file name where salt updates are stored
     FILE *f;
-    if ((f = fopen("salt.txt","r")) == NULL){
+    if ((f = fopen(FILE_NAME,"r")) == NULL){
         fclose(f);
     }
     else{
@@ -67,9 +58,10 @@ int main()
         // read full file
         fread(&slt_f, 1, fsize, f);
         fclose(f);
-        char *ind = strstr(slt_f, salt);
+        char *ind = strstr(slt_f, salt); //see if newer salt exists
         if(ind != NULL)
         {
+            printf("Found and loaded up to date salt from file\n");
             memclear_string(salt, sizeof(salt));
             for(int i = 0; i < BUFSIZ; i++){
                 if(ind[i] != '\n')
@@ -79,6 +71,12 @@ int main()
             }
         }
     }
+
+    //read password without displaying in terminal
+    char pass[BUFSIZ]; memclear_string(pass, sizeof(pass));
+    puts("Insert password:");
+    read_string(pass);
+    pass[strlen(pass) - 1] = '\0';
 
     //create string that will be hashed to produce unique password
     char data[BUFSIZ*2]; memclear_string(data, sizeof(data));
@@ -121,7 +119,9 @@ int main()
     for(int i = 0; i < PASS_LENGTH; i++){
         out[i] = (float)(unsigned char)hash[i]/255*(126-33) + 33;
     }
+    printf("Output password given salt is\n");
     puts(out);
+    printf("Preferably, do not copy the password to clipboard\n");
     memclear_string(out, sizeof(out));
     memclear_string(hash, sizeof(hash));
 
