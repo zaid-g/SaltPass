@@ -35,7 +35,7 @@ void memclear_string(char *ch, int l){
     l = 0;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     //read salt without displaying in terminal
     puts("Insert salt (could be website name, file name, etc..), backspace works:");
@@ -43,38 +43,39 @@ int main()
     read_string(salt);
     salt[strlen(salt) - 1] = '\0';//replace newline with 0
 
-    //get up to date salt value if file exists and it exists in file
-    char FILE_NAME[] = "salt.txt"; //modify file name where salt updates are stored
-    FILE *f;
-    if ((f = fopen(FILE_NAME,"r")) == NULL){
-        fclose(f);
-    }
-    else{
-        fseek(f, 0, SEEK_END);
-        long fsize = ftell(f);
-        fseek(f, 0, SEEK_SET);  /* same as rewind(f); */
-        char slt_f[fsize + 1];
-        slt_f[fsize] = '\0';
-        // read full file
-        fread(&slt_f, 1, fsize, f);
-        fclose(f);
-        char *ind = strstr(slt_f, salt); //see if newer salt exists
-        if(ind != NULL)
-        {
-            printf("Found and loaded up to date salt from file\n");
-            memclear_string(salt, sizeof(salt));
-            for(int i = 0; i < BUFSIZ; i++){
-                if(ind[i] != '\n')
-                    salt[i] = ind[i];
-                else
-                    break;
+    //get up to date salt value if file exists and it exists in file and file name was passed as argument
+    if(argc > 1){
+        FILE *f;
+        if ((f = fopen(argv[1],"r")) == NULL){
+            fclose(f);
+        }
+        else{
+            fseek(f, 0, SEEK_END);
+            long fsize = ftell(f);
+            fseek(f, 0, SEEK_SET);  /* same as rewind(f); */
+            char slt_f[fsize + 1];
+            slt_f[fsize] = '\0';
+            // read full file
+            fread(&slt_f, 1, fsize, f);
+            fclose(f);
+            char *ind = strstr(slt_f, salt); //see if newer salt exists
+            if(ind != NULL)
+            {
+                printf("Found and loaded up to date salt from file\n");
+                memclear_string(salt, sizeof(salt));
+                for(int i = 0; i < BUFSIZ; i++){
+                    if(ind[i] != '\n')
+                        salt[i] = ind[i];
+                    else
+                        break;
+                }
             }
         }
     }
 
     //read password without displaying in terminal
     char pass[BUFSIZ]; memclear_string(pass, sizeof(pass));
-    puts("Insert password:");
+    puts("Insert password, backspace works:");
     read_string(pass);
     pass[strlen(pass) - 1] = '\0';
 
