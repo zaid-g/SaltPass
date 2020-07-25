@@ -10,7 +10,7 @@
 ## Usage
 compile by running ```gcc -o saltpass saltpass.c -lssl -lcrypto``` or run the executable.
 
-To retrieve the password for an e.g. website, user executes the program and enters the master password and a "salt" value that represents the e.g. website they are loggin into. The program then outputs the unique password (generated deterministically at run time) consisting of pseudo-random alpha-numeric/special characters given that salt. 
+To retrieve the password given a salt (salt could be website name user wants to login to, file name user is encrypting, etc..), user executes the program and enters their master password and the salt. The program then outputs the unique password (generated deterministically at run time) consisting of pseudo-random alpha-numeric/special characters given that salt. 
 
 ```
 e.g.
@@ -27,6 +27,8 @@ unique password output for gmail: L9|Q!EL`s|lqZ\'=
 It is preferred that user doesn't copy password to clipboard, as any unprivileged process has access to data stored there. Instead, read output and type manually in the destination box. It is recommended that user runs Wayland protocol (ideally with screenshot disabled) over X for enhanced security. Under X, any unprivileged process can sniff and inject keystrokes from/into other processes (a malicious process can easily read master password and salt as they are inputed using keyboard) as well as read the content of the screen (a malicious process can easily read output password from screen). User can discard the code and keep the executable, and run ```chmod 544 <executable>``` to prevent unprivileged replacement of executable by a malicious process.
 
 To generate a new password, it is recommended to enter run the program twice to decrease the chance that the generated password is invalid due to typos. 
+
+e.g.
 ```
 [zaid] ~/dev/SaltPass [master] M?? % ./saltpass
 Insert salt (could be website name, file name, etc..), backspace works:
@@ -41,7 +43,7 @@ Output password given salt is
 ?RZ|7n;U!gX2C1J}
 Preferably, do not copy the password to clipboard
 ```
-The length of the generated passwords is 16 characters by defualt 
+The length of the generated passwords is 16 characters by default 
 
 ## Method 
 The program appends the master password and salt, passes them through a sha512 hash function (from openssl), and reformats the sha output to an appropriately formatted unique password displayed to the screen by rescaling the byte values to ascii range [33,126], which are the typable keyboard characters. 
@@ -50,7 +52,7 @@ For example, suppose the password is "p@ssw0rd" and salt is "facebook". The prog
 
 ```29cd1bc0bf0e6386680207156837d078f7ab80c55cb2fdc351adb8cb3daa12b659701a3afab2a277244ecaadbff888551c8a08a56b6619b6a5edc3c4251261bb```.
 
-Each byte $b$ lies in the range [0, 255]. Remapping the first `PASS_LENGTH` bytes to range [33, 126] $y = b/255*(126 - 33) + 33$ gives us the output password:
+Each byte **b** lies in the range [0, 255]. Remapping the first `PASS\_LENGTH` bytes to range [33, 126] $y = b/255*(126 - 33) + 33$ gives us the output password:
 
 `/k*gf&EQF!#(F5lL`
 
