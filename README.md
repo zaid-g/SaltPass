@@ -45,6 +45,12 @@ Preferably, do not copy the password to clipboard
 ```
 The length of the generated passwords is 16 characters by default 
 
+Whenever the program is run, it looks for the most up to date version of the entered salt value in `FILE_NAME` in case the user has updated their password. To update the password to a website, the user runs the following command:
+
+```sed <FILE_NAME>....```
+
+After updating, if the user then runs the program with the salt, the program automatically detects the updated value of that salt and outputs the new up to date password. <FILE_NAME> implements a running counter for keeping track of the most up to date password for a given salt. In this way, the list of all possible passwords given a salt are already pre-determined, so the user can always access their old passwords for any salt value, as well as new passwords in case they need to update them.
+
 ## Method 
 The program appends the master password and salt, passes them through a sha512 hash function (from openssl), and reformats the sha output to an appropriately formatted unique password displayed to the screen by rescaling the byte values to ascii range [33,126], which are the typable keyboard characters. 
 
@@ -52,7 +58,7 @@ For example, suppose the password is "p@ssw0rd" and salt is "facebook". The prog
 
 ```29cd1bc0bf0e6386680207156837d078f7ab80c55cb2fdc351adb8cb3daa12b659701a3afab2a277244ecaadbff888551c8a08a56b6619b6a5edc3c4251261bb```.
 
-Each byte **b** lies in the range [0, 255]. Remapping the first `PASS\_LENGTH` bytes to range [33, 126] $y = b/255*(126 - 33) + 33$ gives us the output password:
+Each byte **b** lies in the range [0, 255]. Remapping the first `PASS_LENGTH` bytes to range [33, 126] **y** = **b**/255*(126 - 33) + 33 gives us the output password:
 
 `/k*gf&EQF!#(F5lL`
 
