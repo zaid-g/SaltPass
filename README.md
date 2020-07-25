@@ -8,7 +8,7 @@
 <sup>1</sup>Please note that the code has NOT been independently verified to be secure by a third party.
 
 ## Usage
-compile by running ```gcc -o saltpass saltpass.c -lssl -lcrypto``` or run the executable.
+compile by running ```gcc -o saltpass saltpass.c -lssl -lcrypto``` 
 
 To retrieve the password given a salt (salt could be website name user wants to login to, file name user is encrypting, etc..), user executes the program and enters their master password and the salt. The program then outputs the unique password (generated deterministically at run time) consisting of pseudo-random alpha-numeric/special characters given that salt. 
 
@@ -28,28 +28,17 @@ It is preferred that user doesn't copy password to clipboard, as any unprivilege
 
 To generate a new password, it is recommended to enter run the program twice to decrease the chance that the generated password is invalid due to typos. 
 
-e.g.
+The length of the generated passwords is 16 characters by default (can modify in code).
+
+Whenever the program is run, it looks for the most up to date version of the entered salt value in the file path determined by the argument passed to the executable. This is to enable the user to update passwords.
+
+e.g. If `saltfile.txt` contains
 ```
-[zaid] ~/dev/SaltPass [master] M?? % ./saltpass
-Insert salt (could be website name, file name, etc..), backspace works:
-Insert password, backspace works:
-Output password given salt is
-?RZ|7n;U!gX2C1J}
-Preferably, do not copy the password to clipboard
-[zaid] ~/dev/SaltPass [master] M?? % ./saltpass
-Insert salt (could be website name, file name, etc..), backspace works:
-Insert password, backspace works:
-Output password given salt is
-?RZ|7n;U!gX2C1J}
-Preferably, do not copy the password to clipboard
+google#
+icloud##
+spotify#
 ```
-The length of the generated passwords is 16 characters by default 
-
-Whenever the program is run, it looks for the most up to date version of the entered salt value in `FILE_NAME` in case the user has updated their password. To update the password to a website, the user runs the following command:
-
-```sed <FILE_NAME>....```
-
-After updating, if the user then runs the program with the salt, the program automatically detects the updated value of that salt and outputs the new up to date password. <FILE_NAME> implements a running counter for keeping track of the most up to date password for a given salt. In this way, the list of all possible passwords given a salt are already pre-determined, so the user can always access their old passwords for any salt value, as well as new passwords in case they need to update them.
+And the user executes the program with the argument to that file `./saltpass saltfile.txt` and passes the salt "icloud", it will scan the file for `icloud` and use the salt value in the file "icloud##". This will generate the most up to date password for icloud. The user can view their previously used passwords by running the program without passing an argument, and entering e.g. a salt value = "icloud" to get their first password, "icloud#" to get their second password, "icloud####" to get their 5th password, etc.. The user can edit the saltfile by appending a '#' to the relevant salt to update their password for that salt.
 
 ## Method 
 The program appends the master password and salt, passes them through a sha512 hash function (from openssl), and reformats the sha output to an appropriately formatted unique password displayed to the screen by rescaling the byte values to ascii range [33,126], which are the typable keyboard characters. 
@@ -58,7 +47,7 @@ For example, suppose the password is "p@ssw0rd" and salt is "facebook". The prog
 
 ```29cd1bc0bf0e6386680207156837d078f7ab80c55cb2fdc351adb8cb3daa12b659701a3afab2a277244ecaadbff888551c8a08a56b6619b6a5edc3c4251261bb```.
 
-Each byte **b** lies in the range [0, 255]. Remapping the first `PASS_LENGTH` bytes to range [33, 126] **y** = **b**/255*(126 - 33) + 33 gives us the output password:
+Each byte **b** lies in the range [0, 255]. Remapping the first <password_length> bytes to range [33, 126] **y** = **b**/255*(126 - 33) + 33 gives us the output password:
 
 `/k*gf&EQF!#(F5lL`
 
