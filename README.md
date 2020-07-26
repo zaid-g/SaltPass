@@ -8,7 +8,7 @@
 <sup>1</sup>Please note that the code has NOT been independently verified to be secure by a third party.
 
 ## Usage
-compile by running ```gcc -o saltpass saltpass.c -lssl -lcrypto``` 
+compile by running ```gcc -o saltpass saltpass.c -lssl -lcrypto```. You can also static compile using ```gcc -static-libgcc -static saltpass.c -lssl -lcrypto``` to allow for running the executable without needing the necessary libraries on different systems.
 
 To retrieve the password given a salt (salt could be website name user wants to login to, file name user is encrypting, etc..), user executes the program and enters their master password and the salt. The program then outputs the unique password (generated deterministically at run time) consisting of pseudo-random alpha-numeric/special characters given that salt. 
 
