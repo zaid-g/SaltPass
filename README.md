@@ -1,6 +1,6 @@
 # Free memoryless password manager
 ## Features
-- **Simple**: code is only 129 lines long, so it's easy to audit and improve to fit your specific needs. Supports password updates/changes using simple method.
+- **Simple**: code is only 129 lines long, so it's easy to audit/configure to fit your specific needs. Supports password updates/changes using simple method.
 - **Fast**
 - **Memoryless**: no data is kept/stored, improving security. User must re-enter master password every time program is run to retrieve passwords.
 - **Secure**<sup>1</sup>: Process memory is cleared before program exits. Terminal hides password and salt while user inputs on screen. Passing the master password as a command line argument not permited, since it gets saved in command history and would be visible to other processes.. For more notes on security, see Usage section below.
