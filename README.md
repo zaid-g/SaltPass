@@ -3,11 +3,16 @@
 - **Simple**: code is only 129 lines long, so it's easy to audit and improve to fit your specific needs. Supports password updates/changes using simple method.
 - **Fast**
 - **Memoryless**: no data is kept/stored, improving security. User must re-enter master password every time program is run to retrieve passwords.
-- **Secure**<sup>1</sup>: Process memory is cleared before program exits. Terminal hides password and salt while user inputs on screen. Passing the master password as a command line argument not permited, since it gets saved in command history and would be visible to other processes.. For more notes on security, see Usage section below.
+- **Secure**<sup>1</sup>: Process memory is cleared before program exits. Terminal hides password and salt while user inputs on screen (echo disabled by default, but can be optionally enabled by passing -e flag). Passing the master password as a command line argument not permited, since it gets saved in command history and would be visible to other processes.. For more notes on security, see Usage section below.
 
 <sup>1</sup>Please note that the code has NOT been independently verified to be secure by a third party.
 
 ## Usage
+```
+program [-e] [path_to_salt_file]
+```
+
+
 compile by running ```gcc -o saltpass saltpass.c -lssl -lcrypto```. You can also static compile using ```gcc -static-libgcc -static saltpass.c -lssl -lcrypto``` to allow for running the executable without needing the necessary libraries on different systems.
 
 To retrieve the password given a salt (salt could be website name user wants to login to, file name user is encrypting, etc..), user executes the program and enters their master password and the salt. The program then outputs the unique password (generated deterministically at run time) consisting of pseudo-random alpha-numeric/special characters given that salt. 

@@ -5,28 +5,33 @@
 #include <openssl/sha.h>
 #include <math.h>
 
-void read_string(char* password)
+void read_string(char* password, int terminal_echo)
 {
-    static struct termios old_terminal;
-    static struct termios new_terminal;
+	if(terminal_echo == 0){
+		static struct termios old_terminal;
+		static struct termios new_terminal;
 
-    // get settings of the actual terminal
-    tcgetattr(0, &old_terminal);
+		// get settings of the actual terminal
+		tcgetattr(0, &old_terminal);
 
-    // do not echo the characters
-    new_terminal = old_terminal;
-    new_terminal.c_lflag &= ~(ECHO);
+		// do not echo the characters
+		new_terminal = old_terminal;
+		new_terminal.c_lflag &= ~(ECHO);
 
-    // set this as the new terminal options
-    tcsetattr(0, TCSANOW, &new_terminal);
+		// set this as the new terminal options
+		tcsetattr(0, TCSANOW, &new_terminal);
 
-    // get the password
-    // the user can add chars and delete if he puts it wrong
-    // the input process is done when he hits the enter
-    fgets(password, BUFSIZ, stdin);
+		// get the password
+		// the user can add chars and delete if he puts it wrong
+		// the input process is done when he hits the enter
+		fgets(password, BUFSIZ, stdin);
 
-    // go back to the old settings
-    tcsetattr(0, TCSANOW, &old_terminal);
+		// go back to the old settings
+		tcsetattr(0, TCSANOW, &old_terminal);
+	}
+	else{
+		fgets(password, BUFSIZ, stdin);
+	}
 }
 
 void memclear_string(char *ch, int l){
@@ -37,16 +42,40 @@ void memclear_string(char *ch, int l){
 
 int main(int argc, char* argv[])
 {
-    //read salt without displaying in terminal
-    puts("Insert salt (could be website name, file name, etc..), backspace works:");
-    char salt[BUFSIZ]; memclear_string(salt, sizeof(salt));
-    read_string(salt);
+	//parse command line args
+	int terminal_echo = 0; //echo disabled by default (will not display typed characters in terminal)
+	size_t file_ind = 0; //salt file
+    size_t optind;
+    for(optind = 1; optind < argc; optind++){
+		switch(argv[optind][0])
+		{
+			case '-':
+				switch(argv[optind][1])
+				{
+					case 'e': 
+						terminal_echo = 1; //enable echo with 'e' flag
+						break; 
+					default:
+						fprintf(stderr, "Usage: %s [-e] [file...]\n", argv[0]);
+						exit(EXIT_FAILURE);
+				}
+				break;
+			default:
+				file_ind = optind;
+        }   
+    } 
+
+    //read salt 
+    puts("\nInsert salt (could be website name, file name, etc..), backspace works:");
+    char salt[BUFSIZ]; 
+    memclear_string(salt, sizeof(salt));
+    read_string(salt, terminal_echo);
     salt[strlen(salt) - 1] = '\0';//replace newline with 0
 
-    //get up to date salt value if file exists and it exists in file and file name was passed as argument
-    if(argc > 1){
+    //get up to date salt value if file path was passed as argument, and salt exists in file 
+	if(file_ind != 0){
         FILE *f;
-        if ((f = fopen(argv[1],"r")) == NULL){
+        if ((f = fopen(argv[file_ind],"r")) == NULL){
             fclose(f);
         }
         else{
@@ -61,7 +90,7 @@ int main(int argc, char* argv[])
             char *ind = strstr(slt_f, salt); //see if newer salt exists
             if(ind != NULL)
             {
-                printf("Found and loaded up to date salt from file\n");
+                printf("\n**Found and loaded up to date salt from file**\n\n");
                 memclear_string(salt, sizeof(salt));
                 for(int i = 0; i < BUFSIZ; i++){
                     if(ind[i] != '\n')
@@ -73,14 +102,16 @@ int main(int argc, char* argv[])
         }
     }
 
-    //read password without displaying in terminal
-    char pass[BUFSIZ]; memclear_string(pass, sizeof(pass));
+    //read password 
+    char pass[BUFSIZ]; 
+    memclear_string(pass, sizeof(pass));
     puts("Insert password, backspace works:");
-    read_string(pass);
+    read_string(pass, terminal_echo);
     pass[strlen(pass) - 1] = '\0';
 
     //create string that will be hashed to produce unique password
-    char data[BUFSIZ*2]; memclear_string(data, sizeof(data));
+    char data[BUFSIZ*2]; 
+    memclear_string(data, sizeof(data));
 
     int stop_ind = 0;
     for(int i = 0; i < BUFSIZ; i++){
@@ -120,7 +151,7 @@ int main(int argc, char* argv[])
     for(int i = 0; i < PASS_LENGTH; i++){
         out[i] = (float)(unsigned char)hash[i]/255*(126-33) + 33;
     }
-    printf("Output password given salt is\n");
+    printf("\nOutput password given salt is\n");
     puts(out);
     printf("Preferably, do not copy the password to clipboard\n");
     memclear_string(out, sizeof(out));
