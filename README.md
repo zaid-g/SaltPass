@@ -14,7 +14,7 @@ program [-e] [path_to_salt_file]
 
 Program tested on Debian linux.
 
-compile by running ```make```. You can also static compile using ```gcc -static-libgcc -static saltpass.c -lssl -lcrypto``` to allow for running the executable without needing the necessary libraries on different systems.
+compile by running ```make```. You can also static compile using ```gcc -o saltpass saltpass.c -static -lssl -lcrypto``` to allow for running the executable without relying on potentially different/corrupted required libraries on different systems.
 
 To retrieve the password given a salt (salt could be website name user wants to login to, file name user is encrypting, etc..), user executes the program and enters their master password and the salt. The program then outputs the unique password (generated deterministically at run time) consisting of pseudo-random alpha-numeric/special characters given that salt. 
 
