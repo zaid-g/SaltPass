@@ -1,2 +1,2 @@
 all: saltpass.c
-	gcc -o saltpass saltpass.c -lssl -lcrypto
+	gcc -o saltpass saltpass.c -lcrypto
