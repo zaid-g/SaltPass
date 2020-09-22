@@ -8,7 +8,7 @@
 <sup>1</sup>Please note that the code has NOT been independently verified to be secure by a third party.
 
 ## Usage
-clone the repo, and run ```make```. It will create the ```saltpass``` executable, which is the program.
+clone the repo, and run ```make```. It will static compile ```saltpass.c``` and create the ```saltpass``` executable, which is the program.
 
 ```
 saltpass [-e] [path_to_salt_file]
@@ -16,7 +16,6 @@ saltpass [-e] [path_to_salt_file]
 
 Program tested on Debian linux.
 
-You can also static compile using ```gcc -o saltpass saltpass.c -static -lcrypto``` to allow for running the executable without relying on potentially different/corrupted required libraries on different systems.
 
 To retrieve the password given a salt (salt could be website name user wants to login to, file name user is encrypting, etc..), user executes the program and enters their master password and the salt. The program then outputs the unique password (generated deterministically at run time) consisting of pseudo-random alpha-numeric/special characters given that salt. 
 
