@@ -8,8 +8,10 @@
 <sup>1</sup>Please note that the code has NOT been independently verified to be secure by a third party.
 
 ## Usage
+clone the repo, and run ```make```. It will create the ```saltpass``` executable, which is the program.
+
 ```
-program [-e] [path_to_salt_file]
+saltpass [-e] [path_to_salt_file]
 ```
 
 Program tested on Debian linux.
