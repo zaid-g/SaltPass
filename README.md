@@ -3,7 +3,7 @@
 - **Simple**: code is only ~150 lines long, so it's easy to audit/configure to fit your specific needs. Supports password updates/changes using simple method. Relies on OpenSSL crypto library for sha512 hash.
 - **Fast**
 - **Memoryless**: no data is kept/stored, improving security. User must re-enter master password every time program is run to retrieve passwords.
-- **Secure**<sup>1</sup>: Process memory is cleared before program exits. Terminal hides password and salt while user inputs on screen (echo disabled by default, but can be optionally enabled by passing -e flag). Passing the master password as a command line argument not permited, since it gets saved in command history and would be visible to other processes.. For more notes on security, see Usage section below.
+- **Secure**<sup>1</sup>: Process memory is cleared before program exits. Terminal hides password and salt while you input on screen (echo disabled by default, but can be optionally enabled by passing -e flag). Passing the master password as a command line argument not permited, since it gets saved in command history and would be visible to other processes.. For more notes on security, see Usage section below.
 
 <sup>1</sup>Please note that the code has NOT been independently verified to be secure by a third party.
 
@@ -17,7 +17,7 @@ saltpass [-e] [path_to_salt_file]
 Program tested on Debian linux.
 
 
-To retrieve the password given a salt (salt could be website name user wants to login to, file name user is encrypting, etc..), user executes the program and enters their master password and the salt. The program then outputs the unique password (generated deterministically at run time) consisting of pseudo-random alpha-numeric/special characters given that salt. 
+To retrieve the password given a salt (salt could be website name you wants to login to, file name you encrypting, etc..), execute the program and enters their master password and the salt. The program then outputs the unique password (generated deterministically at run time) consisting of pseudo-random alpha-numeric/special characters given that salt. 
 
 ```
 e.g.
@@ -31,13 +31,13 @@ salt: gmail
 unique password output for gmail: L9|Q!EL`s|lqZ\'=
 ```
 
-It is preferred that user doesn't copy password to clipboard, as any unprivileged process has access to data stored there. Instead, read output and type manually in the destination box. It is recommended that user runs Wayland protocol (ideally with screenshot disabled) over X for enhanced security. Under X, any unprivileged process can sniff and inject keystrokes from/into other processes (a malicious process can easily read master password and salt as they are inputed using keyboard) as well as read the content of the screen (a malicious process can easily read output password from screen). User can discard the code and keep the executable, and run ```chmod 544 <executable>``` to prevent unprivileged replacement of executable by a malicious process.
+It is preferred that you don't copy password to clipboard, as any unprivileged process has access to data stored there. Instead, read output and type manually in the destination box. It is recommended that you run Wayland protocol (ideally with screenshot disabled) over X for enhanced security. Under X, any unprivileged process can sniff and inject keystrokes from/into other processes (a malicious process can easily read master password and salt as they are inputed using keyboard) as well as read the content of the screen (a malicious process can easily read output password from screen). User can discard the code and keep the executable, and run ```chmod 544 <executable>``` to prevent unprivileged replacement of executable by a malicious process.
 
 To generate a new password (for example when newly signing up for a website), it is recommended to run the program twice to decrease the chance that the generated password is invalid due to typos. 
 
 The length of the generated passwords is 16 characters by default (can modify in code).
 
-Whenever the program is run, it looks for the most up to date version of the entered salt value (if it exists) in the file path determined by the argument passed to the executable. This is to enable the user to update passwords.
+Whenever the program is run, it looks for the most up to date version of the entered salt value (if it exists) in the file path determined by the argument passed to the executable. This is to enable the you to update passwords.
 
 e.g. If `saltfile.txt` contains
 ```
@@ -45,7 +45,7 @@ google#
 icloud##
 spotify#
 ```
-And the user executes the program with the argument of that file's path e.g. `./saltpass saltfile.txt` and passes the salt "icloud", it will use the salt value in the file "icloud##". This will lead the program to generate the most up to date password for icloud. The user can edit the saltfile by appending a '#' (or any character(s)) to the relevant salt to update the password for that salt. The user can view their previously used passwords for a given salt by running the program without passing an argument, and entering e.g. a salt value = "icloud" to get their first password, "icloud#" to get their second used password, "icloud####" to get their 5th password, etc.. 
+And you executes the program with the argument of that file's path e.g. `./saltpass saltfile.txt` and passes the salt "icloud", it will use the salt value in the file "icloud##". This will lead the program to generate the most up to date password for icloud. You can edit the saltfile by appending a '#' (or any character(s)) to the relevant salt to update the password for that salt. You can view your previously used passwords for a given salt by running the program without passing an argument, and entering e.g. a salt value = "icloud" to get their first password, "icloud#" to get their second used password, "icloud####" to get their 5th password, etc.. 
 
 ## Method 
 The program appends the master password and salt, passes them through a sha512 hash function (from openssl), and reformats the sha output to an appropriately formatted unique password displayed to the screen by rescaling the byte values to ascii range [33,126], which are the typable keyboard characters. 
