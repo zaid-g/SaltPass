@@ -1,2 +1,2 @@
 all: saltpass.c
-	gcc -o saltpass saltpass.c -static -lcrypto
+	gcc -o sp saltpass.c -static -lcrypto

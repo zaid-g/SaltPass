@@ -44,9 +44,7 @@ int main(int argc, char* argv[])
 {
 	//parse command line args
 	int terminal_echo = 0; //echo disabled by default (will not display typed characters in terminal)
-	size_t file_ind = 0; //salt file
-    size_t optind;
-    for(optind = 1; optind < argc; optind++){
+    for(size_t optind = 1; optind < argc; optind++){
 		switch(argv[optind][0])
 		{
 			case '-':
@@ -61,101 +59,33 @@ int main(int argc, char* argv[])
 				}
 				break;
 			default:
-				file_ind = optind;
+                fprintf(stderr, "Usage: %s [-e] [file...]\n", argv[0]);
+                exit(EXIT_FAILURE);
         }   
     } 
 
-    //read salt 
-    puts("\nInsert salt (could be website name, file name, etc..), backspace works:");
-    char salt[BUFSIZ]; 
-    memclear_string(salt, sizeof(salt));
-    read_string(salt, terminal_echo);
-    salt[strlen(salt) - 1] = '\0';//replace newline with 0
+    //read string that includes salt (e.g. website), user, master password, state (e.g. iteration)
+    char full_string[BUFSIZ]; 
+    memclear_string(full_string, sizeof(full_string));
+    puts("Insert full string e.g. '<salt><user><password><state>', backspace works:");
+    read_string(full_string, terminal_echo);
 
-    //get up to date salt value if file path was passed as argument, and salt exists in file 
-	if(file_ind != 0){
-        FILE *f;
-        if ((f = fopen(argv[file_ind],"r")) == NULL){
-            fclose(f);
-        }
-        else{
-            fseek(f, 0, SEEK_END);
-            long fsize = ftell(f);
-            fseek(f, 0, SEEK_SET);  /* same as rewind(f); */
-            char slt_f[fsize + 1];
-            slt_f[fsize] = '\0';
-            // read full file
-            fread(&slt_f, 1, fsize, f);
-            fclose(f);
-            char *ind = strstr(slt_f, salt); //see if newer salt exists
-            if(ind != NULL)
-            {
-                printf("\n**Found and loaded up to date salt from file**\n\n");
-                memclear_string(salt, sizeof(salt));
-                for(int i = 0; i < BUFSIZ; i++){
-                    if(ind[i] != '\n')
-                        salt[i] = ind[i];
-                    else
-                        break;
-                }
-            }
-        }
-    }
+    // pass to sha256 hash function
+    unsigned char hash[32 + 1];
+    hash[32] = '\0';
+    SHA256(full_string, strlen(full_string), hash);
+    memclear_string(full_string, sizeof(full_string));
 
-    //read password 
-    char pass[BUFSIZ]; 
-    memclear_string(pass, sizeof(pass));
-    puts("Insert password, backspace works:");
-    read_string(pass, terminal_echo);
-    pass[strlen(pass) - 1] = '\0';
-
-    //create string that will be hashed to produce unique password
-    char data[BUFSIZ*2]; 
-    memclear_string(data, sizeof(data));
-
-    int stop_ind = 0;
-    for(int i = 0; i < BUFSIZ; i++){
-        if(pass[i] != '\0' && pass[i] != '\000' && pass[i] != '\n')
-            data[i] = pass[i];
-        else{
-            stop_ind = i;
-            break;
-        }
-    }
-    //append salt
-    for(int i = 0; i <= BUFSIZ; i++){
-        if(salt[i] != '\0' && salt[i] != '\000' && salt[i] != '\n')
-            data[stop_ind + i] = salt[i];
-        else{
-            stop_ind += i;
-            break;
-        }
-    } 
-    
-    //clear memory
-    stop_ind = 0; 
-    memclear_string(pass, sizeof(pass));
-    memclear_string(salt, sizeof(salt));
-
-    char hash[64 + 1];
-    hash[64] = '\0';
-    // pass to sha512 hash function
-    SHA512(data, strlen(data), hash);
-    memclear_string(data, sizeof(data));
-
-    const int PASS_LENGTH = 16;
-    char out[PASS_LENGTH + 1];
-    out[PASS_LENGTH] = '\0';
-
-    //convert to output password by remapping to appropriate ascii chars range[33,126]
-    for(int i = 0; i < PASS_LENGTH; i++){
-        out[i] = (float)(unsigned char)hash[i]/255*(126-33) + 33;
-    }
-    printf("\nOutput password given salt is\n");
-    puts(out);
-    printf("Preferably, do not copy the password to clipboard\n");
-    memclear_string(out, sizeof(out));
+    //convert to hex representation
+    const int PASS_LENGTH = 10;
+    printf("\nUnique password is\n\n\n");
+    for(int i=0; i < PASS_LENGTH; i++)
+        printf("%02x", hash[i]);
     memclear_string(hash, sizeof(hash));
-
+    
+    //append to meet most website password requirements
+    printf("Aa1");
+    printf("\n\n\nPreferably, do not copy the password to clipboard\n");
+    
     return 0;
 }
