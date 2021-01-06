@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
     memclear_string(hash, sizeof(hash));
     
     //append to meet most website password requirements
-    printf("Aa1");
+    printf("0aA");
     printf("\n\n\nPreferably, do not copy the password to clipboard\n");
     
     return 0;
