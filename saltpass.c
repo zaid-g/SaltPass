@@ -78,14 +78,14 @@ int main(int argc, char* argv[])
 
     //convert to hex representation
     const int PASS_LENGTH = 10;
-    printf("\nUnique password is\n\n\n");
+    printf("\nUnique password is\n");
     for(int i=0; i < PASS_LENGTH; i++)
         printf("%02x", hash[i]);
     memclear_string(hash, sizeof(hash));
     
     //append to meet most website password requirements
     printf("0aA");
-    printf("\n\n\nPreferably, do not copy the password to clipboard\n");
+    printf("\nPreferably, do not copy the password to clipboard\n");
     
     return 0;
 }
