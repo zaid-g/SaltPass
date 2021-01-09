@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
     //read string that includes salt (e.g. website), user, master password, state (e.g. iteration)
     char full_string[BUFSIZ]; 
     memclear_string(full_string, sizeof(full_string));
-    puts("Insert full string e.g. '<salt><user-initial><password>[state][U[P]]':");
+    puts("Insert full string e.g. '<salt><user-initial><password>[U[P]][state]':");
     read_string(full_string, terminal_echo);
 
     // pass to sha256 hash function
@@ -76,15 +76,12 @@ int main(int argc, char* argv[])
     SHA256(full_string, strlen(full_string), hash);
     memclear_string(full_string, sizeof(full_string));
 
-    //convert to hex representation
+    //convert to hex representation and print
     const int PASS_LENGTH = 10;
     printf("\nUnique password is\n");
     for(int i=0; i < PASS_LENGTH; i++)
         printf("%02x", hash[i]);
     memclear_string(hash, sizeof(hash));
-    
-    //append to meet most website password requirements
-    printf("0aA");
     printf("\nPreferably, do not copy the password to clipboard\n");
     
     return 0;
