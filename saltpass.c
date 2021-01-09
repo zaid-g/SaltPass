@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
     //read string that includes salt (e.g. website), user, master password, state (e.g. iteration)
     char full_string[BUFSIZ]; 
     memclear_string(full_string, sizeof(full_string));
-    puts("Insert full string e.g. '<salt><user-initial><password><state>[U]':");
+    puts("Insert full string e.g. '<salt><user-initial><password>[state][U[P]]':");
     read_string(full_string, terminal_echo);
 
     // pass to sha256 hash function
