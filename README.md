@@ -1,6 +1,6 @@
 # Free memoryless password manager
 ## Features
-- **Simple**: code is only 91 lines long, so it's easy to audit/configure to fit your specific needs. Relies on OpenSSL crypto library for sha512 hash.
+- **Simple**: code is only 80 lines long, so it's easy to audit/configure to fit your specific needs. Relies on OpenSSL crypto library for sha256 hash function.
 - **Fast**
 - **Memoryless**: no data is kept/stored, improving security. User must re-enter master password every time program is run to retrieve passwords. User should store state file to keep track of password updates/rotations, however.
 - **Secure**: Process memory is cleared before program exits. Terminal hides password and salt while you input on screen (echo disabled by default, but can be optionally enabled by passing -e flag). Passing the master password as a command line argument not permited, since it gets saved in command history and would be visible to other processes.. For more notes on security, see Usage section below.
@@ -20,4 +20,4 @@ It is preferred that you don't copy password to clipboard, as any unprivileged p
 
 To generate a new password (for example when newly signing up for a website), it is recommended to run the program twice to decrease the chance that the generated password is invalid due to typos. 
 
-The length of the generated passwords is 20 characters by default (can modify in code).
+The length of the generated passwords is 26 hex characters by default (can modify in code). So by default, password entropy = 16^26 = 2^104 --> 104 bits of entropy.

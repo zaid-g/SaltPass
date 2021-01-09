@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
     memclear_string(full_string, sizeof(full_string));
 
     //convert to hex representation and print
-    const int PASS_LENGTH = 10;
+    const int PASS_LENGTH = 13;
     printf("\nUnique password is\n");
     for(int i=0; i < PASS_LENGTH; i++)
         printf("%02x", hash[i]);
