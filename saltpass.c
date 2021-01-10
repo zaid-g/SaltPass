@@ -82,7 +82,7 @@ int main(int argc, char* argv[])
     for(int i=0; i < PASS_LENGTH; i++)
         printf("%02x", hash[i]);
     memclear_string(hash, sizeof(hash));
-    printf("\nPreferably, do not copy the password to clipboard\n");
+    printf("\n");
     
     return 0;
 }
